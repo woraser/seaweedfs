@@ -8,6 +8,7 @@ import (
 	"github.com/chrislusf/seaweedfs/weed/storage"
 )
 
+//数据节点结构体
 type DataNode struct {
 	NodeImpl
 	volumes   map[storage.VolumeId]storage.VolumeInfo
@@ -32,6 +33,7 @@ func (dn *DataNode) String() string {
 	return fmt.Sprintf("Node:%s, volumes:%v, Ip:%s, Port:%d, PublicUrl:%s", dn.NodeImpl.String(), dn.volumes, dn.Ip, dn.Port, dn.PublicUrl)
 }
 
+//添加/修改 volume卷
 func (dn *DataNode) AddOrUpdateVolume(v storage.VolumeInfo) (isNew bool) {
 	dn.Lock()
 	defer dn.Unlock()
@@ -49,6 +51,7 @@ func (dn *DataNode) AddOrUpdateVolume(v storage.VolumeInfo) (isNew bool) {
 	return
 }
 
+//修改 volume卷
 func (dn *DataNode) UpdateVolumes(actualVolumes []storage.VolumeInfo) (newVolumes, deletedVolumes []storage.VolumeInfo) {
 	actualVolumeMap := make(map[storage.VolumeId]storage.VolumeInfo)
 	for _, v := range actualVolumes {
@@ -74,6 +77,7 @@ func (dn *DataNode) UpdateVolumes(actualVolumes []storage.VolumeInfo) (newVolume
 	return
 }
 
+//从数据节点中获取volume卷
 func (dn *DataNode) GetVolumes() (ret []storage.VolumeInfo) {
 	dn.RLock()
 	for _, v := range dn.volumes {
@@ -83,6 +87,7 @@ func (dn *DataNode) GetVolumes() (ret []storage.VolumeInfo) {
 	return ret
 }
 
+//根据id从数据节点中获取volume卷
 func (dn *DataNode) GetVolumesById(id storage.VolumeId) (storage.VolumeInfo, error) {
 	dn.RLock()
 	defer dn.RUnlock()

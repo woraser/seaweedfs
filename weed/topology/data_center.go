@@ -1,5 +1,6 @@
 package topology
 
+//数据仓库中心节点 结构体
 type DataCenter struct {
 	NodeImpl
 }

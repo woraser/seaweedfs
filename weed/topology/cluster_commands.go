@@ -5,6 +5,10 @@ import (
 	"github.com/chrislusf/seaweedfs/weed/glog"
 	"github.com/chrislusf/seaweedfs/weed/storage"
 )
+/*
+集群命令
+*/
+
 
 type MaxVolumeIdCommand struct {
 	MaxVolumeId storage.VolumeId `json:"maxVolumeId"`

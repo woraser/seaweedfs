@@ -10,11 +10,18 @@ import (
 	"github.com/chrislusf/seaweedfs/weed/util"
 )
 
+/*
+//分配volume卷
+*/
+
+//分配volume卷的异常
 type AllocateVolumeResult struct {
 	Error string
 }
 
+//分配volume卷
 func AllocateVolume(dn *DataNode, vid storage.VolumeId, option *VolumeGrowOption) error {
+	//values := make(map[string][]string)
 	values := make(url.Values)
 	values.Add("volume", vid.String())
 	values.Add("collection", option.Collection)

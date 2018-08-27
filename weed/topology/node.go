@@ -11,6 +11,8 @@ import (
 )
 
 type NodeId string
+
+//节点接口类
 type Node interface {
 	Id() NodeId
 	String() string
@@ -38,6 +40,8 @@ type Node interface {
 
 	GetValue() interface{} //get reference to the topology,dc,rack,datanode
 }
+
+//节点实现类
 type NodeImpl struct {
 	id                NodeId
 	volumeCount       int

@@ -18,12 +18,19 @@ import (
 )
 
 type MasterServer struct {
+	//对外端口号
 	port                    int
+	//文件存储目录
 	metaFolder              string
+	//volume卷大小限制
 	volumeSizeLimitMB       uint
+	//预分配大小
 	preallocate             int64
+	//心跳发送周期
 	pulseSeconds            int
+	//默认的备份策略
 	defaultReplicaPlacement string
+	//垃圾处理的阀值
 	garbageThreshold        string
 	guard                   *security.Guard
 
@@ -33,11 +40,13 @@ type MasterServer struct {
 
 	bounedLeaderChan chan int
 
-	// notifying clients
+	// notifying clients 用于通知客户端
+	//客户端读写锁通道
 	clientChansLock sync.RWMutex
 	clientChans     map[string]chan *master_pb.VolumeLocation
 }
 
+//创建新的领导者节点
 func NewMasterServer(r *mux.Router, port int, metaFolder string,
 	volumeSizeLimitMB uint,
 	preallocate bool,

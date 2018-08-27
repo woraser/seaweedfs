@@ -12,24 +12,27 @@ import (
 	"github.com/chrislusf/seaweedfs/weed/util"
 )
 
+//拓扑结构
 type Topology struct {
+	//节点
 	NodeImpl
 
 	collectionMap *util.ConcurrentReadMap
 
 	pulse int64
-
+ 	//volume卷大小
 	volumeSizeLimit uint64
-
+	//队列通道
 	Sequence sequence.Sequencer
 
 	chanFullVolumes chan storage.VolumeInfo
 
 	Configuration *Configuration
-
+	//raft算法实现接口
 	RaftServer raft.Server
 }
 
+//创建一个新的拓扑结构
 func NewTopology(id string, seq sequence.Sequencer, volumeSizeLimit uint64, pulse int) *Topology {
 	t := &Topology{}
 	t.id = NodeId(id)
@@ -49,6 +52,7 @@ func NewTopology(id string, seq sequence.Sequencer, volumeSizeLimit uint64, puls
 	return t
 }
 
+//是否是领导者
 func (t *Topology) IsLeader() bool {
 	if leader, e := t.Leader(); e == nil {
 		return leader == t.RaftServer.Name()
